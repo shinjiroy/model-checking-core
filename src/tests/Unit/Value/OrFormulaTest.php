@@ -3,8 +3,8 @@
 namespace Tests\Unit\Domain\Value;
 
 use PHPUnit\Framework\TestCase;
-use Domain\Value\Logic\Formula\OrFormula;
-use Domain\Value\Logic\Formula\AtomicFormula;
+use ModelChecking\Value\Logic\Formula\OrFormula;
+use ModelChecking\Value\Logic\Formula\AtomicFormula;
 
 class OrFormulaTest extends TestCase
 {

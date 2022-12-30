@@ -3,8 +3,8 @@
 namespace Tests\Unit\Domain\Value;
 
 use PHPUnit\Framework\TestCase;
-use Domain\Value\Logic\Formula\NotFormula;
-use Domain\Value\Logic\Formula\AtomicFormula;
+use ModelChecking\Value\Logic\Formula\NotFormula;
+use ModelChecking\Value\Logic\Formula\AtomicFormula;
 
 class NotFormulaTest extends TestCase
 {

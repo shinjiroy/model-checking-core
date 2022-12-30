@@ -1,8 +1,8 @@
 <?php
 
-namespace Domain\Value\Relation;
+namespace ModelChecking\Value\Relation;
 
-use Domain\Value\State\State;
+use ModelChecking\Value\State\State;
 
 /**
  * 遷移関係

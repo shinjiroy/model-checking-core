@@ -1,9 +1,9 @@
 <?php
 
-namespace Domain\Model\Kripke;
+namespace ModelChecking\Model\Kripke;
 
-use Domain\Value\State\State;
-use Domain\Value\Relation\Relation;
+use ModelChecking\Value\State\State;
+use ModelChecking\Value\Relation\Relation;
 
 /**
  * クリプキ構造
@@ -38,5 +38,5 @@ class Kripke
         return $this->relations;
     }
 
-    protected array 
+    // protected array 
 }

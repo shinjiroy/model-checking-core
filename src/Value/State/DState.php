@@ -1,6 +1,6 @@
 <?php
 
-namespace Domain\Value\State;
+namespace ModelChecking\Value\State;
 
 /**
  * データ付きの状態

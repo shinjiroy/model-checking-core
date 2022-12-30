@@ -1,9 +1,9 @@
 <?php
 
-namespace Domain\Value\Transition;
+namespace ModelChecking\Value\Transition;
 
-use Domain\Value\State\State;
-use Domain\Value\Event\Event;
+use ModelChecking\Value\State\State;
+use ModelChecking\Value\Event\Event;
 
 /**
  * 状態遷移

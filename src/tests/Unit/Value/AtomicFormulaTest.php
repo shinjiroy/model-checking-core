@@ -2,7 +2,7 @@
 
 namespace Tests\Unit\Domain\Value;
 
-use Domain\Value\Logic\Formula\AtomicFormula;
+use ModelChecking\Value\Logic\Formula\AtomicFormula;
 use PHPUnit\Framework\TestCase;
 
 class AtomicFormulaTest extends TestCase

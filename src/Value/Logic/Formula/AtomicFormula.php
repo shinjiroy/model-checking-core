@@ -1,6 +1,6 @@
 <?php
 
-namespace Domain\Value\Logic\Formula;
+namespace ModelChecking\Value\Logic\Formula;
 
 use Closure;
 use TypeError;

@@ -1,6 +1,6 @@
 <?php
 
-namespace Domain\Value\Logic\Formula;
+namespace ModelChecking\Value\Logic\Formula;
 
 /**
  * 論理和(A or B)
