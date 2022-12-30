@@ -3,8 +3,8 @@
 namespace Tests\Unit\Domain\Value;
 
 use PHPUnit\Framework\TestCase;
-use Domain\Value\Logic\Formula\ImpFormula;
-use Domain\Value\Logic\Formula\AtomicFormula;
+use ModelChecking\Value\Logic\Formula\ImpFormula;
+use ModelChecking\Value\Logic\Formula\AtomicFormula;
 
 class ImpFormulaTest extends TestCase
 {

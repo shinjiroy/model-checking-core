@@ -3,10 +3,10 @@
 namespace Tests\Unit\Domain\Value;
 
 use PHPUnit\Framework\TestCase;
-use Domain\Value\Logic\Formula\OrFormula;
-use Domain\Value\Logic\Formula\AndFormula;
-use Domain\Value\Logic\Formula\AtomicFormula;
-use Domain\Value\Logic\Formula\NotFormula;
+use ModelChecking\Value\Logic\Formula\OrFormula;
+use ModelChecking\Value\Logic\Formula\AndFormula;
+use ModelChecking\Value\Logic\Formula\AtomicFormula;
+use ModelChecking\Value\Logic\Formula\NotFormula;
 
 class AndFormulaTest extends TestCase
 {

@@ -1,6 +1,6 @@
 <?php
 
-namespace Domain\Value\Logic\Formula;
+namespace ModelChecking\Value\Logic\Formula;
 
 /**
  * 否定論理式(not A)

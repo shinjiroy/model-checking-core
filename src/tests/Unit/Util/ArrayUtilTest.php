@@ -4,7 +4,7 @@ namespace Tests\Unit\Util;
 
 use PHPUnit\Framework\TestCase;
 use stdClass;
-use Util\ArrayUtil;
+use ModelChecking\Util\ArrayUtil;
 
 class ArrayUtilTest extends TestCase
 {

@@ -2,11 +2,11 @@
 
 namespace Tests\Unit\Domain\Model;
 
-use Util\ArrayUtil;
-use Domain\Value\State\State;
-use Domain\Model\Automaton\Automaton;
-use Domain\Value\Event\Event;
-use Domain\Value\Transition\Transition;
+use ModelChecking\Util\ArrayUtil;
+use ModelChecking\Value\State\State;
+use ModelChecking\Model\Automaton\Automaton;
+use ModelChecking\Value\Event\Event;
+use ModelChecking\Value\Transition\Transition;
 use PHPUnit\Framework\TestCase;
 
 class AutomatonTest extends TestCase

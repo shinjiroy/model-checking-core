@@ -1,6 +1,6 @@
 <?php
 
-namespace Domain\Value\Event;
+namespace ModelChecking\Value\Event;
 
 /**
  * 状態遷移イベント
