@@ -13,7 +13,7 @@ class DState extends State
         return $this->data;
     }
 
-    public function __construct(string $name, int $type = self::DEFAULT, mixed $data)
+    public function __construct(string $name, mixed $data, int $type = self::DEFAULT)
     {
         parent::__construct($name, $type);
         $this->data = $data;
