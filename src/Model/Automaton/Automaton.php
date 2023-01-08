@@ -85,14 +85,10 @@ class Automaton
      * コンストラクタ
      *
      * @param State[] $states 状態集合
-     * @param array $events イベント、ラベルの集合
-     * @param array $transitions 遷移の集合
+     * @param Event[] $events イベント、ラベルの集合
+     * @param Transition[] $transitions 遷移の集合
      */
-    public function __construct(
-        array $states,
-        array $events,
-        array $transitions
-    ) {
+    public function __construct(array $states, array $events, array $transitions) {
         $this->states = $states;
         foreach ($this->states as $state) {
             if ($state->getType() === State::INIT) {
