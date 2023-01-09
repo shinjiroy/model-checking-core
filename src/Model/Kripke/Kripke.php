@@ -3,9 +3,10 @@
 namespace ModelChecking\Model\Kripke;
 
 use InvalidArgumentException;
-use ModelChecking\Value\Logic\Formula\AtomicFormula;
+use ModelChecking\Util\ArrayUtil;
 use ModelChecking\Value\State\State;
 use ModelChecking\Value\Relation\Relation;
+use ModelChecking\Value\Logic\Formula\AtomicFormula;
 
 /**
  * クリプキ構造
@@ -68,6 +69,9 @@ class Kripke
      */
     public function __construct(array $states, array $relations, array $formulas)
     {
+        if (ArrayUtil::isDuplicate($states, 'getName')) {
+            throw new InvalidArgumentException('重複した状態が含まれています。');
+        }
         $this->states = $states;
         $this->relations = $relations;
 
