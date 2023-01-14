@@ -19,7 +19,7 @@ class OrFormula extends BinaryOperation
      * @param boolean $result2
      * @return boolean
      */
-    protected function judge(bool $result1, bool $result2) : bool
+    protected static function judge(bool $result1, bool $result2) : bool
     {
         return $result1 || $result2;
     }

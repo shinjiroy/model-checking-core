@@ -29,13 +29,13 @@ abstract class BinaryOperation implements Formula
      * @param boolean $result2
      * @return boolean
      */
-    abstract protected function judge(bool $result1, bool $result2) : bool;
+    abstract protected static function judge(bool $result1, bool $result2) : bool;
 
     public function __invoke(...$args) : bool
     {
         $result1 = ($this->fml1)(...($args[0] ?? []));
         $result2 = ($this->fml2)(...($args[1] ?? []));
         // 原子論理式の時点で2つともbool値を返すことは保証されている
-        return $this->judge($result1, $result2);
+        return static::judge($result1, $result2);
     }
 }
