@@ -11,7 +11,7 @@ abstract class BinaryOperation implements Formula
     protected Formula $fml2;
 
     /**
-     * $fml1 or $fml2
+     * $fml1 R $fml2
      *
      * @param Formula $fml1
      * @param Formula $fml2
