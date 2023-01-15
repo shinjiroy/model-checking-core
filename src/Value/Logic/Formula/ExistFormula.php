@@ -14,8 +14,8 @@ class ExistFormula extends Quantifier
      */
     protected function judge() : bool
     {
-        foreach ($this->variables as $variable) {
-            if (($this->fml)($variable)) {
+        foreach ($this->vars as $var) {
+            if (($this->fml)($var)) {
                 return true;
             }
         }

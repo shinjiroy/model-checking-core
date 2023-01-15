@@ -7,18 +7,18 @@ namespace ModelChecking\Value\Logic\Formula;
  */
 abstract class Quantifier implements Formula
 {
-    protected array $variables;
+    protected array $vars;
     protected Formula $fml;
 
     /**
      * Q $variables $fml
      *
-     * @param array $variables
+     * @param array $vars
      * @param Formula $fml
      */
-    public function __construct(array $variables, Formula $fml)
+    public function __construct(array $vars, Formula $fml)
     {
-        $this->variables = $variables;
+        $this->vars = $vars;
         $this->fml = $fml;
     }
 
