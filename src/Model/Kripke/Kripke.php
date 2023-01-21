@@ -6,7 +6,9 @@ use InvalidArgumentException;
 use ModelChecking\Util\ArrayUtil;
 use ModelChecking\Value\State\State;
 use ModelChecking\Value\Relation\Relation;
-use ModelChecking\Value\Logic\Formula\AtomicFormula;
+use ModelChecking\Value\Logic\Ctl\CtlProposition;
+use ModelChecking\Value\Logic\Proposition\Proposition;
+use ModelChecking\Value\Logic\Proposition\AtomicProposition;
 
 /**
  * クリプキ構造
@@ -43,16 +45,16 @@ class Kripke
 
     /**
      * ラベル付け関数
-     * 各Stateに対してtrueを返すAtomicFormulaの参照が紐づけられる
+     * 各Stateに対してtrueを返すAtomicPropositionの参照が紐づけられる
      * 紐づく物が無い場合は空の配列を返す
      *
      * @var AtomicFormura[][]
      */
     protected array $lblFunction = [];
     /**
-     * @var AtomicFormula[]
+     * @var AtomicProposition[]
      */
-    public function getFormulaForLabelState(State $state) : array
+    public function getPropositionForLabelState(State $state) : array
     {
         if (isset($this->lblFunction[$state->getName()])) {
             return $this->lblFunction[$state->getName()];
@@ -65,7 +67,7 @@ class Kripke
      *
      * @param State[] $states 状態集合
      * @param Relation[] $relations 遷移関係の集合
-     * @param AtomicFormula[] $formulas Stateを引数とするAtomicFormulaの集合
+     * @param AtomicProposition[] $formulas Stateを引数とするAtomicPropositionの集合
      */
     public function __construct(array $states, array $relations, array $formulas)
     {
@@ -84,5 +86,17 @@ class Kripke
                 }
             }
         }
+    }
+
+    /**
+     * 状態stateがCTL式$propを満たすか
+     *
+     * @param State $state
+     * @param CtlProposition $prop
+     * @return boolean
+     */
+    public function satisfy(State $state, CtlProposition $prop) : bool
+    {
+        return true;
     }
 }

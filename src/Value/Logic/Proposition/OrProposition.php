@@ -1,16 +1,16 @@
 <?php
 
-namespace ModelChecking\Value\Logic\Formula;
+namespace ModelChecking\Value\Logic\Proposition;
 
 /**
  * 論理和(A or B)
  * 
- * $fml = new OrFormula($fml1, $fml2);
- * $fml1Arg = [];
- * $fml2Arg = [];
- * $fml($fml1Arg, $fml2Arg);
+ * $prop = new OrProposition($prop1, $prop2);
+ * $prop1Arg = [];
+ * $prop2Arg = [];
+ * $prop($prop1Arg, $prop2Arg);
  */
-class OrFormula extends BinaryOperation
+class OrProposition extends BinaryOperation
 {
     /**
      * OR演算

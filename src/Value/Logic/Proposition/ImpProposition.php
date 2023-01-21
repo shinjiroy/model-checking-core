@@ -1,16 +1,16 @@
 <?php
 
-namespace ModelChecking\Value\Logic\Formula;
+namespace ModelChecking\Value\Logic\Proposition;
 
 /**
  * 論理包含(A => B)
  * 
- * $fml = new ImpFormula($fml1, $fml2);
- * $fml1Arg = [];
- * $fml2Arg = [];
- * $fml($fml1Arg, $fml2Arg);
+ * $prop = new ImpProposition($prop1, $prop2);
+ * $prop1Arg = [];
+ * $prop2Arg = [];
+ * $prop($prop1Arg, $prop2Arg);
  */
-class ImpFormula extends BinaryOperation
+class ImpProposition extends BinaryOperation
 {
     /**
      * 論理包含

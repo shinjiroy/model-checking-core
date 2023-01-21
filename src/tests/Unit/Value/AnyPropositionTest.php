@@ -3,14 +3,14 @@
 namespace Tests\Unit\Domain\Value;
 
 use PHPUnit\Framework\TestCase;
-use ModelChecking\Value\Logic\Formula\AtomicFormula;
-use ModelChecking\Value\Logic\Formula\AnyFormula;
+use ModelChecking\Value\Logic\Proposition\AtomicProposition;
+use ModelChecking\Value\Logic\Proposition\AnyProposition;
 
-class AnyFormulaTest extends TestCase
+class AnyPropositionTest extends TestCase
 {
     /**
      * invokeが動作するかのテスト
-     * 引数なし
+     * 変数なし
      *
      * @return void
      */
@@ -21,14 +21,14 @@ class AnyFormulaTest extends TestCase
         };
         $vars = [1,2,3];
 
-        $aFml = new AtomicFormula($func);
-        $fml = new AnyFormula($vars, $aFml);
-        $this->assertSame(true, $fml());
+        $aProp = new AtomicProposition($func);
+        $prop = new AnyProposition($vars, $aProp);
+        $this->assertSame(true, $prop());
     }
 
     /**
      * invokeが動作するかのテスト
-     * 引数あり
+     * 変数あり
      *
      * @return void
      */
@@ -39,17 +39,17 @@ class AnyFormulaTest extends TestCase
         };
         $vars = [1,2,3];
 
-        $aFml = new AtomicFormula($func);
-        $fml = new AnyFormula($vars, $aFml);
-        $this->assertSame(true, $fml());
+        $aProp = new AtomicProposition($func);
+        $prop = new AnyProposition($vars, $aProp);
+        $this->assertSame(true, $prop());
 
         $func = function ($v) {
             return $v > 1;
         };
         $vars = [1,2,3];
 
-        $aFml = new AtomicFormula($func);
-        $fml = new AnyFormula($vars, $aFml);
-        $this->assertSame(false, $fml());
+        $aProp = new AtomicProposition($func);
+        $prop = new AnyProposition($vars, $aProp);
+        $this->assertSame(false, $prop());
     }
 }

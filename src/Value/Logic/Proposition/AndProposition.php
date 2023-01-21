@@ -1,16 +1,16 @@
 <?php
 
-namespace ModelChecking\Value\Logic\Formula;
+namespace ModelChecking\Value\Logic\Proposition;
 
 /**
  * 論理和(A and B)
  * 
- * $fml = new AndFormula($fml1, $fml2);
- * $fml1Arg = [];
- * $fml2Arg = [];
- * $fml($fml1Arg, $fml2Arg);
+ * $prop = new AndProposition($prop1, $prop2);
+ * $prop1Arg = [];
+ * $prop2Arg = [];
+ * $prop($prop1Arg, $prop2Arg);
  */
-class AndFormula extends BinaryOperation
+class AndProposition extends BinaryOperation
 {
     /**
      * AND演算

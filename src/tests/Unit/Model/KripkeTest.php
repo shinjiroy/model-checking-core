@@ -4,7 +4,7 @@ namespace Tests\Unit\Domain\Model;
 
 use ModelChecking\Model\Kripke\Kripke;
 use PHPUnit\Framework\TestCase;
-use ModelChecking\Value\Logic\Formula\AtomicFormula;
+use ModelChecking\Value\Logic\Proposition\AtomicProposition;
 use ModelChecking\Value\State\DState;
 use ModelChecking\Value\Relation\Relation;
 
@@ -41,15 +41,15 @@ class KripkeTest extends TestCase
         // 今回で言うと1,2番目には1,2しか入らない。3番目には0,1しか入らないことを縛っている。
         $formulas = [];
         foreach ([1,2] as $val) {
-            $formulas['x=' . $val] = new AtomicFormula(function (DState $state) use ($val) {
+            $formulas['x=' . $val] = new AtomicProposition(function (DState $state) use ($val) {
                 return $state->getData()[0] === $val;
             });
-            $formulas['y=' . $val] = new AtomicFormula(function (DState $state) use ($val) {
+            $formulas['y=' . $val] = new AtomicProposition(function (DState $state) use ($val) {
                 return $state->getData()[1] === $val;
             });
         }
         foreach ([0,1] as $val) {
-            $formulas['z=' . $val] = new AtomicFormula(function (DState $state) use ($val) {
+            $formulas['z=' . $val] = new AtomicProposition(function (DState $state) use ($val) {
                 return $state->getData()[2] === $val;
             });
         }
@@ -67,22 +67,22 @@ class KripkeTest extends TestCase
         foreach ($states as $state) {
             /** @var DState $state */
 
-            $resultFormulas = $result->getFormulaForLabelState($state);
+            $resultPropositions = $result->getPropositionForLabelState($state);
             // x,y,z分の3つが入ってるはず
-            $this->assertCount(3, $resultFormulas);
+            $this->assertCount(3, $resultPropositions);
 
             $expectSData = $state->getData(); // [1,1,1]みたいなのが入ってる
-            $expectFormulas = [
+            $expectPropositions = [
                 $formulas['x=' . $expectSData[0]],
                 $formulas['y=' . $expectSData[1]],
                 $formulas['z=' . $expectSData[2]],
             ];
-            // x,y,zに対応するAtomicFormulaが入ってるはず
-            // 出来れば$this->assertCount(3, array_intersect($resultFormulas, $expectFormulas));で確認したかった
-            foreach ($expectFormulas as $expectFormula) {
+            // x,y,zに対応するAtomicPropositionが入ってるはず
+            // 出来れば$this->assertCount(3, array_intersect($resultPropositions, $expectPropositions));で確認したかった
+            foreach ($expectPropositions as $expectProposition) {
                 $exists = false;
-                foreach ($resultFormulas as $resultFormula) {
-                    if ($expectFormula === $resultFormula) {
+                foreach ($resultPropositions as $resultProposition) {
+                    if ($expectProposition === $resultProposition) {
                         // 参照が一致している物を含めばOK
                         $exists = true;
                         break;

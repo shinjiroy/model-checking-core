@@ -2,14 +2,14 @@
 
 namespace Tests\Unit\Domain\Value;
 
-use ModelChecking\Value\Logic\Formula\AtomicFormula;
+use ModelChecking\Value\Logic\Proposition\AtomicProposition;
 use PHPUnit\Framework\TestCase;
 
-class AtomicFormulaTest extends TestCase
+class AtomicPropositionTest extends TestCase
 {
     /**
      * invokeが動作するかのテスト
-     * 引数なし
+     * 変数なし
      *
      * @return void
      */
@@ -19,13 +19,13 @@ class AtomicFormulaTest extends TestCase
             return true;
         };
 
-        $fml = new AtomicFormula($func);
-        $this->assertSame(true, $fml());
+        $prop = new AtomicProposition($func);
+        $this->assertSame(true, $prop());
     }
 
     /**
      * invokeが動作するかのテスト
-     * 引数あり
+     * 変数あり
      *
      * @return void
      */
@@ -35,9 +35,9 @@ class AtomicFormulaTest extends TestCase
             return (bool)$arg1;
         };
 
-        $fml = new AtomicFormula($func);
-        $this->assertSame(true, $fml('test', 0));
-        $this->assertSame(false, $fml(false, 0));
+        $prop = new AtomicProposition($func);
+        $this->assertSame(true, $prop('test', 0));
+        $this->assertSame(false, $prop(false, 0));
     }
 
     /**
@@ -52,7 +52,7 @@ class AtomicFormulaTest extends TestCase
         };
         $this->expectError();
 
-        $fml = new AtomicFormula($func);
-        $fml();
+        $prop = new AtomicProposition($func);
+        $prop();
     }
 }
