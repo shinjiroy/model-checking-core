@@ -39,21 +39,21 @@ class KripkeTest extends TestCase
         ];
         // 原子命題の集合はStateに使った変数名(要は$x,$y,$z)とその値の組。
         // 今回で言うと1,2番目には1,2しか入らない。3番目には0,1しか入らないことを縛っている。
-        $formulas = [];
+        $propositions = [];
         foreach ([1,2] as $val) {
-            $formulas['x=' . $val] = new AtomicProposition(function (DState $state) use ($val) {
+            $propositions['x=' . $val] = new AtomicProposition(function (DState $state) use ($val) {
                 return $state->getData()[0] === $val;
             });
-            $formulas['y=' . $val] = new AtomicProposition(function (DState $state) use ($val) {
+            $propositions['y=' . $val] = new AtomicProposition(function (DState $state) use ($val) {
                 return $state->getData()[1] === $val;
             });
         }
         foreach ([0,1] as $val) {
-            $formulas['z=' . $val] = new AtomicProposition(function (DState $state) use ($val) {
+            $propositions['z=' . $val] = new AtomicProposition(function (DState $state) use ($val) {
                 return $state->getData()[2] === $val;
             });
         }
-        $result = new Kripke($states, $relations, $formulas);
+        $result = new Kripke($states, $relations, $propositions);
 
         // 参照そのものが一致することを確認する。
 
@@ -73,9 +73,9 @@ class KripkeTest extends TestCase
 
             $expectSData = $state->getData(); // [1,1,1]みたいなのが入ってる
             $expectPropositions = [
-                $formulas['x=' . $expectSData[0]],
-                $formulas['y=' . $expectSData[1]],
-                $formulas['z=' . $expectSData[2]],
+                $propositions['x=' . $expectSData[0]],
+                $propositions['y=' . $expectSData[1]],
+                $propositions['z=' . $expectSData[2]],
             ];
             // x,y,zに対応するAtomicPropositionが入ってるはず
             // 出来れば$this->assertCount(3, array_intersect($resultPropositions, $expectPropositions));で確認したかった

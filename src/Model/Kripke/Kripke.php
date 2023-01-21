@@ -48,7 +48,7 @@ class Kripke
      * 各Stateに対してtrueを返すAtomicPropositionの参照が紐づけられる
      * 紐づく物が無い場合は空の配列を返す
      *
-     * @var AtomicFormura[][]
+     * @var AtomicProposition[][]
      */
     protected array $lblFunction = [];
     /**
@@ -67,9 +67,9 @@ class Kripke
      *
      * @param State[] $states 状態集合
      * @param Relation[] $relations 遷移関係の集合
-     * @param AtomicProposition[] $formulas Stateを引数とするAtomicPropositionの集合
+     * @param AtomicProposition[] $propositions Stateを引数とするAtomicPropositionの集合
      */
-    public function __construct(array $states, array $relations, array $formulas)
+    public function __construct(array $states, array $relations, array $propositions)
     {
         if (ArrayUtil::isDuplicate($states, 'getName')) {
             throw new InvalidArgumentException('重複した状態が含まれています。');
@@ -80,9 +80,9 @@ class Kripke
         // ラベル付け関数の構築
         foreach ($states as $state) {
             $this->lblFunction[$state->getName()] = [];
-            foreach ($formulas as $formula) {
-                if ($formula($state)) {
-                    $this->lblFunction[$state->getName()][] = $formula;
+            foreach ($propositions as $proposition) {
+                if ($proposition($state)) {
+                    $this->lblFunction[$state->getName()][] = $proposition;
                 }
             }
         }
