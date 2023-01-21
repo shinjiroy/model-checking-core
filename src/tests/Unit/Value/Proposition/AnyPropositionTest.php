@@ -1,12 +1,12 @@
 <?php
 
-namespace Tests\Unit\Domain\Value;
+namespace Tests\Unit\Domain\Value\Proposition;
 
 use PHPUnit\Framework\TestCase;
 use ModelChecking\Value\Logic\Proposition\AtomicProposition;
-use ModelChecking\Value\Logic\Proposition\ExistProposition;
+use ModelChecking\Value\Logic\Proposition\AnyProposition;
 
-class ExistPropositionTest extends TestCase
+class AnyPropositionTest extends TestCase
 {
     /**
      * invokeが動作するかのテスト
@@ -22,7 +22,7 @@ class ExistPropositionTest extends TestCase
         $vars = [1,2,3];
 
         $aProp = new AtomicProposition($func);
-        $prop = new ExistProposition($vars, $aProp);
+        $prop = new AnyProposition($vars, $aProp);
         $this->assertSame(true, $prop());
     }
 
@@ -35,21 +35,21 @@ class ExistPropositionTest extends TestCase
     public function test_invoke_arg()
     {
         $func = function ($v) {
-            return $v > 2;
+            return $v > 0;
         };
         $vars = [1,2,3];
 
         $aProp = new AtomicProposition($func);
-        $prop = new ExistProposition($vars, $aProp);
+        $prop = new AnyProposition($vars, $aProp);
         $this->assertSame(true, $prop());
 
         $func = function ($v) {
-            return $v > 3;
+            return $v > 1;
         };
         $vars = [1,2,3];
 
         $aProp = new AtomicProposition($func);
-        $prop = new ExistProposition($vars, $aProp);
+        $prop = new AnyProposition($vars, $aProp);
         $this->assertSame(false, $prop());
     }
 }

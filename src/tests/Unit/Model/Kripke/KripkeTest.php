@@ -1,6 +1,6 @@
 <?php
 
-namespace Tests\Unit\Domain\Model;
+namespace Tests\Unit\Domain\Model\Kripke;
 
 use ModelChecking\Model\Kripke\Kripke;
 use PHPUnit\Framework\TestCase;

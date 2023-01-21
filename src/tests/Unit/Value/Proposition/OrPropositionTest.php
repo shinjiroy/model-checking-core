@@ -1,12 +1,12 @@
 <?php
 
-namespace Tests\Unit\Domain\Value;
+namespace Tests\Unit\Domain\Value\Proposition;
 
 use PHPUnit\Framework\TestCase;
-use ModelChecking\Value\Logic\Proposition\ImpProposition;
+use ModelChecking\Value\Logic\Proposition\OrProposition;
 use ModelChecking\Value\Logic\Proposition\AtomicProposition;
 
-class ImpPropositionTest extends TestCase
+class OrPropositionTest extends TestCase
 {
     /**
      * invokeが動作するかのテスト
@@ -25,8 +25,8 @@ class ImpPropositionTest extends TestCase
 
         $prop1 = new AtomicProposition($func1);
         $prop2 = new AtomicProposition($func2);
-        $prop = new ImpProposition($prop1, $prop2);
-        $this->assertSame(false, $prop()); // true => false
+        $prop = new OrProposition($prop1, $prop2);
+        $this->assertSame(true, $prop()); // true or false
     }
 
     /**
@@ -46,14 +46,14 @@ class ImpPropositionTest extends TestCase
 
         $prop1 = new AtomicProposition($func1);
         $prop2 = new AtomicProposition($func2);
-        $prop = new ImpProposition($prop1, $prop2);
+        $prop = new OrProposition($prop1, $prop2);
 
         $prop1Arg = ['test', 0];
         // $prop2Arg = []; // 2番目が変数が無い命題の場合は指定しなくて良い
-        $this->assertSame(false, $prop($prop1Arg)); // true => false
+        $this->assertSame(true, $prop($prop1Arg)); // true or false
         $prop1Arg = [false, 0];
         // $prop2Arg = [];
-        $this->assertSame(true, $prop($prop1Arg)); // false => false
+        $this->assertSame(false, $prop($prop1Arg)); // false or false
     }
 
     /**
@@ -73,13 +73,13 @@ class ImpPropositionTest extends TestCase
 
         $prop1 = new AtomicProposition($func1);
         $prop2 = new AtomicProposition($func2);
-        $prop = new ImpProposition($prop1, $prop2);
+        $prop = new OrProposition($prop1, $prop2);
 
         $prop1Arg = ['test', 0];
         $prop2Arg = ['111'];
-        $this->assertSame(true, $prop($prop1Arg, $prop2Arg)); // true => true
+        $this->assertSame(true, $prop($prop1Arg, $prop2Arg)); // true or true
         $prop1Arg = [false, 0];
         $prop2Arg = [''];
-        $this->assertSame(true, $prop($prop1Arg, $prop2Arg)); // false => false
+        $this->assertSame(false, $prop($prop1Arg, $prop2Arg)); // false or false
     }
 }

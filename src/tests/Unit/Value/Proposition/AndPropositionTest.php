@@ -1,6 +1,6 @@
 <?php
 
-namespace Tests\Unit\Domain\Value;
+namespace Tests\Unit\Domain\Value\Proposition;
 
 use PHPUnit\Framework\TestCase;
 use ModelChecking\Value\Logic\Proposition\OrProposition;
