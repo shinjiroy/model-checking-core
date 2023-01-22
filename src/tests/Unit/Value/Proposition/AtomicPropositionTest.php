@@ -1,6 +1,6 @@
 <?php
 
-namespace Tests\Unit\Domain\Value\Proposition;
+namespace Tests\Unit\Value\Proposition;
 
 use ModelChecking\Value\Logic\Proposition\AtomicProposition;
 use PHPUnit\Framework\TestCase;

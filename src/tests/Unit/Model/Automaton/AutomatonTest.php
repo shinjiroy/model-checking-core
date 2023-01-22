@@ -1,6 +1,6 @@
 <?php
 
-namespace Tests\Unit\Domain\Model\Automaton;
+namespace Tests\Unit\Model\Automaton;
 
 use ModelChecking\Util\ArrayUtil;
 use ModelChecking\Value\State\State;
