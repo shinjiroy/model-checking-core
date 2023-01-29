@@ -3,7 +3,8 @@
 namespace ModelChecking\Value\Logic\Proposition;
 
 /**
- * 任意(for all x P(x))
+ * 任意
+ * for all x P(x)
  */
 class AnyProposition extends Quantifier
 {
@@ -15,7 +16,9 @@ class AnyProposition extends Quantifier
     protected function judge() : bool
     {
         foreach ($this->vars as $var) {
-            if (!($this->prop)($var)) {
+            // 配列の時は変数が複数とみなす
+            $result = is_array($var) ? ($this->prop)(...$var) : ($this->prop)($var);
+            if (!$result) {
                 return false;
             }
         }

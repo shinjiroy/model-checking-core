@@ -4,6 +4,7 @@ namespace ModelChecking\Value\Logic\Proposition;
 
 /**
  * 存在
+ * for some x P(x)
  */
 class ExistProposition extends Quantifier
 {
@@ -15,7 +16,9 @@ class ExistProposition extends Quantifier
     protected function judge() : bool
     {
         foreach ($this->vars as $var) {
-            if (($this->prop)($var)) {
+            // 配列の時は変数が複数とみなす
+            $result = is_array($var) ? ($this->prop)(...$var) : ($this->prop)($var);
+            if ($result) {
                 return true;
             }
         }

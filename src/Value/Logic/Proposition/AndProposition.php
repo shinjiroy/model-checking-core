@@ -3,7 +3,8 @@
 namespace ModelChecking\Value\Logic\Proposition;
 
 /**
- * 論理和(A and B)
+ * 論理和
+ * A and B
  * 
  * $prop = new AndProposition($prop1, $prop2);
  * $prop1Arg = [];

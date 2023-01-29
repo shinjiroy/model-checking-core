@@ -3,7 +3,8 @@
 namespace ModelChecking\Value\Logic\Proposition;
 
 /**
- * 論理包含(A => B)
+ * 論理包含
+ * A => B
  * 
  * $prop = new ImpProposition($prop1, $prop2);
  * $prop1Arg = [];

@@ -3,7 +3,8 @@
 namespace ModelChecking\Value\Logic\Proposition;
 
 /**
- * 論理和(A or B)
+ * 論理和
+ * A or B
  * 
  * $prop = new OrProposition($prop1, $prop2);
  * $prop1Arg = [];

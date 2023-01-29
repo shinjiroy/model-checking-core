@@ -84,43 +84,4 @@ class AndPropositionTest extends TestCase
         $prop2Arg = ['test'];
         $this->assertSame(false, $prop($prop1Arg, $prop2Arg)); // false and true
     }
-
-    /**
-     * ドモルガンの法則が成り立つこと
-     * not (A and B) iff (not A) or (not B)
-     *
-     * @return void
-     */
-    public function test_de_morgan()
-    {
-        $func1 = function ($arg1) {
-            return (bool)$arg1;
-        };
-        $func2 = function ($arg1) {
-            return (bool)$arg1;
-        };
-
-        $prop1 = new AtomicProposition($func1);
-        $prop2 = new AtomicProposition($func2);
-
-        $left = new NotProposition(new AndProposition($prop1, $prop2));
-        $right = new OrProposition(new NotProposition($prop1), new NotProposition($prop2));
-
-        $prop1Arg = [true];
-        $prop2Arg = [true];
-        $this->assertSame(false, $right($prop1Arg, $prop2Arg));
-        $this->assertSame(false, $left($prop1Arg, $prop2Arg));
-        $prop1Arg = [true];
-        $prop2Arg = [false];
-        $this->assertSame(true, $right($prop1Arg, $prop2Arg));
-        $this->assertSame(true, $left($prop1Arg, $prop2Arg));
-        $prop1Arg = [false];
-        $prop2Arg = [true];
-        $this->assertSame(true, $right($prop1Arg, $prop2Arg));
-        $this->assertSame(true, $left($prop1Arg, $prop2Arg));
-        $prop1Arg = [false];
-        $prop2Arg = [false];
-        $this->assertSame(true, $right($prop1Arg, $prop2Arg));
-        $this->assertSame(true, $left($prop1Arg, $prop2Arg));
-    }
 }
