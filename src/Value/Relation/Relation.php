@@ -10,7 +10,16 @@ use ModelChecking\Value\State\State;
 class Relation
 {
     protected State $from;
+    public function getFrom() : State
+    {
+        return $this->from;
+    }
+
     protected State $to;
+    public function getTo() : State
+    {
+        return $this->to;
+    }
 
     public function __construct(State $from, State $to)
     {
