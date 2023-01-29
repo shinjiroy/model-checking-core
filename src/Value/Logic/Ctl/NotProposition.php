@@ -7,8 +7,9 @@ use ModelChecking\Model\Kripke\Kripke;
 
 /**
  * CTLとしての否定
+ * not (K,s |= φ)
  */
-class NotProposition implements CtlProposition
+class NotProposition extends CtlProposition
 {
     protected CtlProposition $prop;
 
@@ -17,7 +18,14 @@ class NotProposition implements CtlProposition
         $this->prop = $prop;
     }
 
-    public function __invoke(Kripke $model, State $state): bool
+    /**
+     * 判定処理の大元
+     *
+     * @param Kripke $model
+     * @param State $state
+     * @return boolean
+     */
+    protected function ctlInvoke(Kripke $model, State $state): bool
     {
         return !($this->prop)($model, $state);
     }

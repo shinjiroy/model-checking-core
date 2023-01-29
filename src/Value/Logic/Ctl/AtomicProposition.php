@@ -8,8 +8,10 @@ use ModelChecking\Value\Logic\Proposition\AtomicProposition as FormalAtmProposit
 
 /**
  * CTLとしての原子命題
+ * 
+ * p in L(s) (p in PA)
  */
-class AtomicProposition implements CtlProposition
+class AtomicProposition extends CtlProposition
 {
     protected FormalAtmProposition $prop;
 
@@ -18,7 +20,14 @@ class AtomicProposition implements CtlProposition
         $this->prop = $prop;
     }
 
-    public function __invoke(Kripke $model, State $state): bool
+    /**
+     * 判定処理の大元
+     *
+     * @param Kripke $model
+     * @param State $state
+     * @return boolean
+     */
+    protected function ctlInvoke(Kripke $model, State $state): bool
     {
         $props = $model->getPropositionForLabelState($state);
         return in_array($this->prop, $props, true);
