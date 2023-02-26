@@ -163,11 +163,12 @@ class Kripke
         foreach ($relationIdxs as $idx => $relationIdx) {
             $next = $this->relations[$relationIdx]->getTo();
 
-            // 一度した遷移は消す
-            unset($mapFromToRelationsIdxs[$from->getName()][$idx]);
+            $clonedMapFromToRelationsIdxs = $mapFromToRelationsIdxs;
+            // この時、一度した遷移を消した物を渡すようにする。
+            unset($clonedMapFromToRelationsIdxs[$from->getName()][$idx]);
 
             // 次移行の遷移を確認する
-            foreach ($this->getRunArray($next, $mapFromToRelationsIdxs) as $run) {
+            foreach ($this->getRunArray($next, $clonedMapFromToRelationsIdxs) as $run) {
                 yield array_merge([$from], $run);
             }
         }

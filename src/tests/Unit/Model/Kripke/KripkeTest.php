@@ -29,7 +29,7 @@ class KripkeTest extends TestCase
     {
         parent::__construct($name, $data, $dataName);
 
-        // ソフトウェア科学基礎p219 並行プログラムP_mutexを同期並行合成した場合のクリプキ構造
+        // ソフトウェア科学基礎p219 並行プログラムP_mutexを同期並行合成した場合のクリプキ構造を参考に
         self::$states = [];
         foreach ([1,2] as $x) {
             foreach ([1,2] as $y) {
@@ -53,6 +53,7 @@ class KripkeTest extends TestCase
             new Relation(self::$states['1_2_1'], self::$states['1_1_0']),
             new Relation(self::$states['2_2_1'], self::$states['1_1_0']),
             new Relation(self::$states['2_2_1'], self::$states['1_1_1']),
+            new Relation(self::$states['1_1_1'], self::$states['2_2_1']), // getRunのテストケースをより複雑にするため、遷移を追加してみる
         ];
         // 原子命題の集合はStateに使った変数名(要は$x,$y,$z)とその値の組。
         // 今回で言うと1,2番目には1,2しか入らない。3番目には0,1しか入らないことを縛っている。
@@ -132,7 +133,11 @@ class KripkeTest extends TestCase
         // countが一致してかつexpectedのrunが全て含まれていればOK
         $this->assertCount(count($expected), $runs);
         foreach ($expected as $expectedRun) {
+            // if (!in_array($expectedRun, $runs)) {
+            //     var_dump($runs);
+            // }
             $this->assertTrue(in_array($expectedRun, $runs));
+            
         }
     }
     public function case_getRuns()
@@ -144,50 +149,70 @@ class KripkeTest extends TestCase
                 null, // self::$states['1_1_0']
                 [
                     new Run([self::$states['1_1_0'],self::$states['2_1_0'],self::$states['1_1_1'],self::$states['1_2_1'],self::$states['1_1_0']]),
+                    new Run([self::$states['1_1_0'],self::$states['2_1_0'],self::$states['1_1_1'],self::$states['2_2_1'],self::$states['1_1_0']]),
+                    new Run([self::$states['1_1_0'],self::$states['2_1_0'],self::$states['1_1_1'],self::$states['2_2_1'],self::$states['1_1_1'],self::$states['1_2_1'],self::$states['1_1_0']]),
                 ],
             ],
             [
                 self::$states['2_1_0'],
                 [
                     new Run([self::$states['2_1_0'],self::$states['1_1_1'],self::$states['1_2_1'],self::$states['1_1_0'],self::$states['2_1_0']]),
+                    new Run([self::$states['2_1_0'],self::$states['1_1_1'],self::$states['2_2_1'],self::$states['1_1_0'],self::$states['2_1_0']]),
+                    new Run([self::$states['2_1_0'],self::$states['1_1_1'],self::$states['2_2_1'],self::$states['1_1_1'],self::$states['1_2_1'],self::$states['1_1_0'],self::$states['2_1_0']]),
                 ],
             ],
             [
                 self::$states['1_1_1'],
                 [
-                    new Run([self::$states['1_1_1'],self::$states['1_2_1'],self::$states['1_1_0'],self::$states['2_1_0'],self::$states['1_1_1']]),
+                    new Run([self::$states['1_1_1'],self::$states['1_2_1'],self::$states['1_1_0'],self::$states['2_1_0'],self::$states['1_1_1'],self::$states['2_2_1'],self::$states['1_1_0']]),
+                    new Run([self::$states['1_1_1'],self::$states['1_2_1'],self::$states['1_1_0'],self::$states['2_1_0'],self::$states['1_1_1'],self::$states['2_2_1'],self::$states['1_1_1']]),
+                    new Run([self::$states['1_1_1'],self::$states['2_2_1'],self::$states['1_1_0'],self::$states['2_1_0'],self::$states['1_1_1'],self::$states['1_2_1'],self::$states['1_1_0']]),
+                    new Run([self::$states['1_1_1'],self::$states['2_2_1'],self::$states['1_1_1'],self::$states['1_2_1'],self::$states['1_1_0'],self::$states['2_1_0'],self::$states['1_1_1']]),
                 ],
             ],
             [
                 self::$states['2_1_1'],
                 [
                     new Run([self::$states['2_1_1'],self::$states['1_2_1'],self::$states['1_1_0'],self::$states['2_1_0'],self::$states['1_1_1'],self::$states['1_2_1']]),
+                    new Run([self::$states['2_1_1'],self::$states['1_2_1'],self::$states['1_1_0'],self::$states['2_1_0'],self::$states['1_1_1'],self::$states['2_2_1'],self::$states['1_1_0']]),
+                    new Run([self::$states['2_1_1'],self::$states['1_2_1'],self::$states['1_1_0'],self::$states['2_1_0'],self::$states['1_1_1'],self::$states['2_2_1'],self::$states['1_1_1'],self::$states['1_2_1']]),
                 ],
             ],
             [
                 self::$states['1_2_0'],
                 [
                     new Run([self::$states['1_2_0'],self::$states['2_1_0'],self::$states['1_1_1'],self::$states['1_2_1'],self::$states['1_1_0'],self::$states['2_1_0']]),
+                    new Run([self::$states['1_2_0'],self::$states['2_1_0'],self::$states['1_1_1'],self::$states['2_2_1'],self::$states['1_1_0'],self::$states['2_1_0']]),
+                    new Run([self::$states['1_2_0'],self::$states['2_1_0'],self::$states['1_1_1'],self::$states['2_2_1'],self::$states['1_1_1'],self::$states['1_2_1'],self::$states['1_1_0'],self::$states['2_1_0']]),
                 ],
             ],
             [
                 self::$states['2_2_0'],
                 [
                     new Run([self::$states['2_2_0'],self::$states['1_1_0'],self::$states['2_1_0'],self::$states['1_1_1'],self::$states['1_2_1'],self::$states['1_1_0']]),
-                    new Run([self::$states['2_2_0'],self::$states['1_1_1'],self::$states['1_2_1'],self::$states['1_1_0'],self::$states['2_1_0'],self::$states['1_1_1']])
+                    new Run([self::$states['2_2_0'],self::$states['1_1_0'],self::$states['2_1_0'],self::$states['1_1_1'],self::$states['2_2_1'],self::$states['1_1_0']]),
+                    new Run([self::$states['2_2_0'],self::$states['1_1_0'],self::$states['2_1_0'],self::$states['1_1_1'],self::$states['2_2_1'],self::$states['1_1_1'],self::$states['1_2_1'],self::$states['1_1_0']]),
+                    new Run([self::$states['2_2_0'],self::$states['1_1_1'],self::$states['1_2_1'],self::$states['1_1_0'],self::$states['2_1_0'],self::$states['1_1_1'],self::$states['2_2_1'],self::$states['1_1_0']]),
+                    new Run([self::$states['2_2_0'],self::$states['1_1_1'],self::$states['1_2_1'],self::$states['1_1_0'],self::$states['2_1_0'],self::$states['1_1_1'],self::$states['2_2_1'],self::$states['1_1_1']]),
+                    new Run([self::$states['2_2_0'],self::$states['1_1_1'],self::$states['2_2_1'],self::$states['1_1_0'],self::$states['2_1_0'],self::$states['1_1_1'],self::$states['1_2_1'],self::$states['1_1_0']]),
+                    new Run([self::$states['2_2_0'],self::$states['1_1_1'],self::$states['2_2_1'],self::$states['1_1_1'],self::$states['1_2_1'],self::$states['1_1_0'],self::$states['2_1_0'],self::$states['1_1_1']]),
                 ],
             ],
             [
                 self::$states['1_2_1'],
                 [
                     new Run([self::$states['1_2_1'],self::$states['1_1_0'],self::$states['2_1_0'],self::$states['1_1_1'],self::$states['1_2_1']]),
+                    new Run([self::$states['1_2_1'],self::$states['1_1_0'],self::$states['2_1_0'],self::$states['1_1_1'],self::$states['2_2_1'],self::$states['1_1_0']]),
+                    new Run([self::$states['1_2_1'],self::$states['1_1_0'],self::$states['2_1_0'],self::$states['1_1_1'],self::$states['2_2_1'],self::$states['1_1_1'],self::$states['1_2_1']]),
                 ],
             ],
             [
                 self::$states['2_2_1'],
                 [
                     new Run([self::$states['2_2_1'],self::$states['1_1_0'],self::$states['2_1_0'],self::$states['1_1_1'],self::$states['1_2_1'],self::$states['1_1_0']]),
-                    new Run([self::$states['2_2_1'],self::$states['1_1_1'],self::$states['1_2_1'],self::$states['1_1_0'],self::$states['2_1_0'],self::$states['1_1_1']]),
+                    new Run([self::$states['2_2_1'],self::$states['1_1_0'],self::$states['2_1_0'],self::$states['1_1_1'],self::$states['2_2_1'],self::$states['1_1_1'],self::$states['1_2_1'],self::$states['1_1_0']]),
+                    new Run([self::$states['2_2_1'],self::$states['1_1_1'],self::$states['1_2_1'],self::$states['1_1_0'],self::$states['2_1_0'],self::$states['1_1_1'],self::$states['2_2_1'],self::$states['1_1_0']]),
+                    new Run([self::$states['2_2_1'],self::$states['1_1_1'],self::$states['2_2_1'],self::$states['1_1_0'],self::$states['2_1_0'],self::$states['1_1_1'],self::$states['1_2_1'],self::$states['1_1_0']]),
                 ],
             ],
         ];
