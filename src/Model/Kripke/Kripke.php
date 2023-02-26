@@ -2,7 +2,10 @@
 
 namespace ModelChecking\Model\Kripke;
 
+use Generator;
+use LogicException;
 use InvalidArgumentException;
+use ModelChecking\Value\Run\Run;
 use ModelChecking\Util\ArrayUtil;
 use ModelChecking\Value\State\State;
 use ModelChecking\Value\Relation\Relation;
@@ -102,5 +105,71 @@ class Kripke
             throw new InvalidArgumentException('存在しない状態です。');
         }
         return $prop($this, $state);
+    }
+
+    /**
+     * 実行可能な実行を取得する
+     * ※ループが発生した時点でストップします。
+     *
+     * @param State|null $from 開始する状態。指定しない場合は初期状態から。
+     *                         指定せず初期状態も無い場合は例外を投げます。
+     * @return Generator<Run>
+     */
+    public function getRuns(?State $from = null) : Generator
+    {
+        if (is_null($from)) {
+            // 指定が無ければ初期状態取得
+            $from = current(array_filter($this->states, function (State $state) {
+                return $state->getType() === State::INIT;
+            })) ?: null;
+            if (is_null($from)) {
+                throw new LogicException('初期状態を定義するか、開始状態$fromを指定してください。');
+            }
+        }
+
+        // relationsのインデックスをfromのStateで分類分けする
+        $mapFromToRelationsIdxs = [];
+        foreach ($this->relations as $index => $relation) {
+            if (!isset($mapFromToRelationsIdxs[$relation->getFrom()->getName()])) {
+                $mapFromToRelationsIdxs[$relation->getFrom()->getName()] = [];
+            }
+            $mapFromToRelationsIdxs[$relation->getFrom()->getName()][] = $index;
+        }
+
+        // 次々runを作っていく
+        foreach ($this->getRunArray($from, $mapFromToRelationsIdxs) as $run) {
+            yield new Run($run);
+        }
+    }
+
+    /**
+     * 1つの実行(Stateの配列)を返す
+     * ※ループが発生した時点でストップします。
+     *
+     * @param State $from
+     * @param array<string, int[]> $mapFromToRelationsIdxs
+     * @return Generator<array>
+     */
+    protected function getRunArray(State $from, array $mapFromToRelationsIdxs) : Generator
+    {
+        // 遷移先
+        $relationIdxs = $mapFromToRelationsIdxs[$from->getName()] ?? [];
+
+        if (empty($relationIdxs)) {
+            // 遷移先が無ければ終わり
+            yield [$from];
+        }
+
+        foreach ($relationIdxs as $idx => $relationIdx) {
+            $next = $this->relations[$relationIdx]->getTo();
+
+            // 一度した遷移は消す
+            unset($mapFromToRelationsIdxs[$from->getName()][$idx]);
+
+            // 次移行の遷移を確認する
+            foreach ($this->getRunArray($next, $mapFromToRelationsIdxs) as $run) {
+                yield array_merge([$from], $run);
+            }
+        }
     }
 }
