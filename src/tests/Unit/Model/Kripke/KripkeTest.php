@@ -133,11 +133,7 @@ class KripkeTest extends TestCase
         // countが一致してかつexpectedのrunが全て含まれていればOK
         $this->assertCount(count($expected), $runs);
         foreach ($expected as $expectedRun) {
-            // if (!in_array($expectedRun, $runs)) {
-            //     var_dump($runs);
-            // }
             $this->assertTrue(in_array($expectedRun, $runs));
-            
         }
     }
     public function case_getRuns()
