@@ -2,6 +2,7 @@
 
 namespace Tests\Unit\Value\Ctl;
 
+use Tests\Util\TestKripleModel;
 use ModelChecking\Value\Logic\Ctl\ExistNext;
 use ModelChecking\Value\Logic\Ctl\AtomicProposition;
 
@@ -14,10 +15,10 @@ class ExistNextTest extends CtlPropositionTestCase
      */
     public function test_invoke()
     {
-        $atmProp = new AtomicProposition(self::$propositions[1]); // 0の次、1でのみtrueになるはず
+        $atmProp = new AtomicProposition(TestKripleModel::$propositions['y=2']);
         $prop = new ExistNext($atmProp);
 
-        $this->assertSame(true, $prop($this->model, self::$states[0]));
-        $this->assertSame(false, $prop($this->model, self::$states[1]));
+        $this->assertSame(true, $prop($this->model, TestKripleModel::$states['1_1_1'])); // 1_2_1に遷移する(y=2)
+        $this->assertSame(false, $prop($this->model, TestKripleModel::$states['1_2_1'])); // 1_1_0に遷移する(y=1)
     }
 }

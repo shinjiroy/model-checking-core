@@ -2,6 +2,7 @@
 
 namespace Tests\Unit\Value\Ctl;
 
+use Tests\Util\TestKripleModel;
 use ModelChecking\Value\Logic\Ctl\NotProposition;
 use ModelChecking\Value\Logic\Ctl\AtomicProposition;
 
@@ -14,10 +15,10 @@ class NotPropositionTest extends CtlPropositionTestCase
      */
     public function test_invoke()
     {
-        $atmProp = new AtomicProposition(self::$propositions[0]);
+        $atmProp = new AtomicProposition(TestKripleModel::$propositions['y=2']);
         $prop = new NotProposition($atmProp);
 
-        $this->assertSame(false, $prop($this->model, self::$states[0]));
-        $this->assertSame(true, $prop($this->model, self::$states[1]));
+        $this->assertSame(false, $prop($this->model, TestKripleModel::$states['2_2_1']));
+        $this->assertSame(true, $prop($this->model, TestKripleModel::$states['2_1_1']));
     }
 }
