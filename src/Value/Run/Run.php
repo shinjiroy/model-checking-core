@@ -12,6 +12,10 @@ class Run
      * @var State[]
      */
     protected array $states;
+    public function getStates() : array
+    {
+        return $this->states;
+    }
 
     public function __construct(array $states)
     {

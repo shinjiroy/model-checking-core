@@ -144,7 +144,9 @@ class Kripke
 
     /**
      * 1つの実行(Stateの配列)を返す
-     * ※ループが発生した時点でストップします。
+     *
+     * 定義上は無限長の実行であるが、ループが発生した時点でストップします。
+     * 途中でループが発生しうる実行は1回もループしない場合と1回のみループした場合で別の実行になります。
      *
      * @param State $from
      * @param array<string, int[]> $mapFromToRelationsIdxs
