@@ -4,9 +4,9 @@ namespace Tests\Unit\Value\Proposition;
 
 use PHPUnit\Framework\TestCase;
 use ModelChecking\Value\Logic\Proposition\AtomicProposition;
-use ModelChecking\Value\Logic\Proposition\AnyProposition;
+use ModelChecking\Value\Logic\Proposition\AllProposition;
 
-class AnyPropositionTest extends TestCase
+class AllPropositionTest extends TestCase
 {
     /**
      * invokeが動作するかのテスト
@@ -22,7 +22,7 @@ class AnyPropositionTest extends TestCase
         $vars = [1,2,3];
 
         $aProp = new AtomicProposition($func);
-        $prop = new AnyProposition($vars, $aProp);
+        $prop = new AllProposition($vars, $aProp);
         $this->assertSame(true, $prop());
     }
 
@@ -40,7 +40,7 @@ class AnyPropositionTest extends TestCase
         $vars = [1,2,3];
 
         $aProp = new AtomicProposition($func);
-        $prop = new AnyProposition($vars, $aProp);
+        $prop = new AllProposition($vars, $aProp);
         $this->assertSame(true, $prop());
 
         $func = function ($v) {
@@ -49,9 +49,9 @@ class AnyPropositionTest extends TestCase
         $vars = [1,2,3];
 
         $aProp = new AtomicProposition($func);
-        $prop = new AnyProposition($vars, $aProp);
+        $prop = new AllProposition($vars, $aProp);
         $this->assertSame(false, $prop());
-        $prop = new AnyProposition(array_map(function ($var) {
+        $prop = new AllProposition(array_map(function ($var) {
             return [$var]; // 配列でも行ける
         }, $vars), $aProp);
         $this->assertSame(false, $prop());
@@ -71,7 +71,7 @@ class AnyPropositionTest extends TestCase
         $vars = [[3,2],[4,2],[3,3]];
 
         $aProp = new AtomicProposition($func);
-        $prop = new AnyProposition($vars, $aProp);
+        $prop = new AllProposition($vars, $aProp);
         $this->assertSame(true, $prop());
 
         $func = function ($v1, $v2) {
@@ -80,7 +80,7 @@ class AnyPropositionTest extends TestCase
         $vars = [[1,1],[4,1],[5,1]];
 
         $aProp = new AtomicProposition($func);
-        $prop = new AnyProposition($vars, $aProp);
+        $prop = new AllProposition($vars, $aProp);
         $this->assertSame(false, $prop());
     }
 }

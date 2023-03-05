@@ -3,10 +3,10 @@
 namespace ModelChecking\Value\Logic\Proposition;
 
 /**
- * 任意
+ * 全称
  * for all x P(x)
  */
-class AnyProposition extends Quantifier
+class AllProposition extends Quantifier
 {
     /**
      * 命題と全ての変数を元に判定する
