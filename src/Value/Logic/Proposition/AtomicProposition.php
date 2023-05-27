@@ -1,14 +1,14 @@
 <?php
 
-namespace ModelChecking\Value\Logic\Formula;
+namespace ModelChecking\Value\Logic\Proposition;
 
 use Closure;
 use TypeError;
 
 /**
- * 原子論理式
+ * 原子命題
  */
-class AtomicFormula implements Formula
+class AtomicProposition implements Proposition
 {
     private Closure $func;
 
@@ -24,7 +24,7 @@ class AtomicFormula implements Formula
     {
         $result = ($this->func)(...$args);
         if (!is_bool($result)) {
-            throw new TypeError('論理式なのにbool値を返していません。');
+            throw new TypeError('命題なのにbool値を返していません。');
         }
         return $result;
     }

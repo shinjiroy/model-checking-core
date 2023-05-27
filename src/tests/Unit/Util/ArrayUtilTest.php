@@ -5,6 +5,7 @@ namespace Tests\Unit\Util;
 use PHPUnit\Framework\TestCase;
 use stdClass;
 use ModelChecking\Util\ArrayUtil;
+use ModelChecking\Value\State\State;
 
 class ArrayUtilTest extends TestCase
 {
@@ -56,6 +57,95 @@ class ArrayUtilTest extends TestCase
                     'key2' => $obj2,
                     'key3' => $obj3,
                 ]
+            ],
+        ];
+    }
+
+    /**
+     * isDuplicateのテスト
+     * 
+     * @dataProvider case_isDuplicate
+     *
+     * @param array $data
+     * @param string|array $key
+     * @param boolean $expected
+     * @return void
+     */
+    public function test_isDuplicate(array $data, string|array $key, bool $expected)
+    {
+        $this->assertSame($expected, ArrayUtil::isDuplicate($data, $key));
+    }
+    public function case_isDuplicate()
+    {
+        // 1.データ配列
+        // 2.重複とみなすためのキー
+        // 3.結果
+        return [
+            // 配列の配列、キー1つ
+            [
+                [
+                    ['key1' => 'val11', 'key2' => 'val21'],
+                    ['key1' => 'val12', 'key2' => 'val22'],
+                    ['key1' => 'val13', 'key2' => 'val23'],
+                ],
+                'key1',
+                false
+            ],
+            [
+                [
+                    ['key1' => 'val11', 'key2' => 'val21'],
+                    ['key1' => 'val11', 'key2' => 'val22'],
+                    ['key1' => 'val13', 'key2' => 'val23'],
+                ],
+                'key1',
+                true
+            ],
+            // 配列の配列、キー複数
+            [
+                [
+                    ['key1' => 'val11', 'key2' => 'val21'],
+                    ['key1' => 'val12', 'key2' => 'val22'],
+                    ['key1' => 'val13', 'key2' => 'val23'],
+                ],
+                ['key1', 'key2'],
+                false
+            ],
+            [
+                [
+                    ['key1' => 'val11', 'key2' => 'val21'],
+                    ['key1' => 'val12', 'key2' => 'val21'],
+                    ['key1' => 'val13', 'key2' => 'val23'],
+                ],
+                ['key1', 'key2'],
+                false
+            ],
+            [
+                [
+                    ['key1' => 'val11', 'key2' => 'val21'],
+                    ['key1' => 'val12', 'key2' => 'val21'],
+                    ['key1' => 'val12', 'key2' => 'val21'],
+                ],
+                ['key1', 'key2'],
+                true
+            ],
+            // オブジェクトの配列
+            [
+                [
+                    new State('0_0'),
+                    new State('0_1'),
+                    new State('1_0'),
+                ],
+                'getName',
+                false
+            ],
+            [
+                [
+                    new State('0_0'),
+                    new State('0_1'),
+                    new State('0_1'),
+                ],
+                'getName',
+                true
             ],
         ];
     }
