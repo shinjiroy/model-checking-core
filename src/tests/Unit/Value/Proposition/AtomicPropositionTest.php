@@ -2,8 +2,9 @@
 
 namespace Tests\Unit\Value\Proposition;
 
-use ModelChecking\Value\Logic\Proposition\AtomicProposition;
+use TypeError;
 use PHPUnit\Framework\TestCase;
+use ModelChecking\Value\Logic\Proposition\AtomicProposition;
 
 class AtomicPropositionTest extends TestCase
 {
@@ -50,7 +51,7 @@ class AtomicPropositionTest extends TestCase
         $func = function () {
             return 1;
         };
-        $this->expectError();
+        $this->expectException(TypeError::class);
 
         $prop = new AtomicProposition($func);
         $prop();
