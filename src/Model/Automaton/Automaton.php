@@ -2,6 +2,8 @@
 
 namespace ModelChecking\Model\Automaton;
 
+use InvalidArgumentException;
+use ModelChecking\Util\ArrayUtil;
 use ModelChecking\Value\Event\Event;
 use ModelChecking\Value\State\State;
 use ModelChecking\Value\Transition\Transition;
@@ -85,14 +87,13 @@ class Automaton
      * コンストラクタ
      *
      * @param State[] $states 状態集合
-     * @param array $events イベント、ラベルの集合
-     * @param array $transitions 遷移の集合
+     * @param Event[] $events イベント、ラベルの集合
+     * @param Transition[] $transitions 遷移の集合
      */
-    public function __construct(
-        array $states,
-        array $events,
-        array $transitions
-    ) {
+    public function __construct(array $states, array $events, array $transitions) {
+        if (ArrayUtil::isDuplicate($states, 'getName')) {
+            throw new InvalidArgumentException('重複した状態が含まれています。');
+        }
         $this->states = $states;
         foreach ($this->states as $state) {
             if ($state->getType() === State::INIT) {
