@@ -4,10 +4,6 @@ namespace ModelChecking\Value\Logic\Ctl;
 
 use ModelChecking\Value\State\State;
 use ModelChecking\Model\Kripke\Kripke;
-use ModelChecking\Value\Relation\Relation;
-use ModelChecking\Value\Logic\Proposition\AndProposition;
-use ModelChecking\Value\Logic\Proposition\ExistProposition;
-use ModelChecking\Value\Logic\Proposition\AtomicProposition;
 
 /**
  * ある次の状態で成り立つ
@@ -32,21 +28,14 @@ class ExistNext extends CtlProposition
      */
     protected function ctlInvoke(Kripke $model, State $state): bool
     {
-        // 定義通りに状態s'に存在量化子をつけると効率が悪いため、遷移につけるものとする
-        $prop = new AndProposition(
-            new AtomicProposition(function (Relation $relation) use ($state) {
-                return $relation->getFrom() === $state;
-            }),
-            new AtomicProposition(function (Relation $relation) use ($model) {
-                return ($this->prop)($model, $relation->getTo());
-            })
-        );
-        $vars = array_map(function (Relation $relation) {
-            return [
-                [$relation], // andの左側の引数
-                [$relation], // andの右側の引数
-            ];
-        }, $model->getRelations());
-        return (new ExistProposition($vars, $prop))();
+        // 現在の状態から遷移可能な状態を取得し、φが成り立つかチェック
+        foreach ($model->getRelations() as $relation) {
+            if ($relation->getFrom() === $state) {
+                if (($this->prop)($model, $relation->getTo())) {
+                    return true; // いずれかの次状態でφが成り立てばtrue
+                }
+            }
+        }
+        return false; // どの次状態でもφが成り立たなければfalse
     }
 }
