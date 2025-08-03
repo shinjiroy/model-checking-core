@@ -15,10 +15,12 @@ class NotPropositionTest extends CtlPropositionTestCase
      */
     public function test_invoke()
     {
-        $atmProp = new AtomicProposition(TestKripleModel::$propositions['y=2']);
+        $atmProp = $this->createAtomicProp('y=2');
         $prop = new NotProposition($atmProp);
-
-        $this->assertSame(false, $prop($this->model, TestKripleModel::$states['2_2_1']));
-        $this->assertSame(true, $prop($this->model, TestKripleModel::$states['2_1_1']));
+        
+        $this->assertPropResults($prop, [
+            '2_2_1' => false, // NOT y=2 when y=2
+            '1_1_1' => true,  // NOT y=2 when y≠2
+        ]);
     }
 }
