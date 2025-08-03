@@ -15,13 +15,13 @@ class OrPropositionTest extends CtlPropositionTestCase
      */
     public function test_invoke()
     {
-        $atmProp1 = new AtomicProposition(TestKripleModel::$propositions['x=1']);
-        $atmProp2 = new AtomicProposition(TestKripleModel::$propositions['y=2']);
-        $prop = new OrProposition($atmProp1, $atmProp2);
-
-        $this->assertSame(true, $prop($this->model, TestKripleModel::$states['1_1_0']));
-        $this->assertSame(true, $prop($this->model, TestKripleModel::$states['2_2_0']));
-        $this->assertSame(true, $prop($this->model, TestKripleModel::$states['1_2_0']));
-        $this->assertSame(false, $prop($this->model, TestKripleModel::$states['2_1_1']));
+        $prop = $this->createOrProp('x=1', 'y=2');
+        
+        $this->assertPropResults($prop, [
+            '1_1_0' => true,  // x=1 OR y≠2
+            '2_2_1' => true,  // x≠1 OR y=2  
+            '1_2_1' => true,  // x=1 OR y=2
+            '2_1_1' => false, // x≠1 OR y≠2
+        ]);
     }
 }

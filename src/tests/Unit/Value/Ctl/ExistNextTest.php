@@ -15,10 +15,12 @@ class ExistNextTest extends CtlPropositionTestCase
      */
     public function test_invoke()
     {
-        $atmProp = new AtomicProposition(TestKripleModel::$propositions['y=2']);
+        $atmProp = $this->createAtomicProp('y=2');
         $prop = new ExistNext($atmProp);
-
-        $this->assertSame(true, $prop($this->model, TestKripleModel::$states['1_1_1'])); // 1_2_1に遷移する(y=2)
-        $this->assertSame(false, $prop($this->model, TestKripleModel::$states['1_2_1'])); // 1_1_0に遷移する(y=1)
+        
+        $this->assertPropResults($prop, [
+            '1_1_1' => true,  // 次状態のいずれかでy=2
+            '2_2_0' => false, // 次状態のどれでもy≠2
+        ]);
     }
 }
