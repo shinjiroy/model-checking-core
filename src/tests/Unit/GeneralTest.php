@@ -5,7 +5,7 @@ namespace Tests\Unit;
 use PHPUnit\Framework\TestCase;
 use ModelChecking\Value\Logic\Proposition\AtomicProposition;
 
-class GenerarlTest extends TestCase
+class GeneralTest extends TestCase
 {
     /**
      * オブジェクトの等価性を確認する

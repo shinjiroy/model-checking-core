@@ -4,7 +4,7 @@ namespace ModelChecking\Value\Logic\Ctl;
 
 use ModelChecking\Value\State\State;
 use ModelChecking\Model\Kripke\Kripke;
-use ModelChecking\Value\Logic\Proposition\AtomicProposition as FormalAtmProposition;
+use ModelChecking\Value\Logic\Proposition\AtomicProposition as BasicAtomicProposition;
 
 /**
  * CTLとしての原子命題
@@ -13,9 +13,9 @@ use ModelChecking\Value\Logic\Proposition\AtomicProposition as FormalAtmProposit
  */
 class AtomicProposition extends CtlProposition
 {
-    protected FormalAtmProposition $prop;
+    protected BasicAtomicProposition $prop;
 
-    public function __construct(FormalAtmProposition $prop)
+    public function __construct(BasicAtomicProposition $prop)
     {
         $this->prop = $prop;
     }
