@@ -34,7 +34,6 @@ class State
 
     public function equals(self $state) : bool
     {
-        // 参照まで一致する必要はない
-        return $this == $state;
+        return $this->name === $state->name && $this->type === $state->type;
     }
 }
